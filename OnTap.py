@@ -77,12 +77,8 @@ Faculty = Brewery('Faculty Brewing Co.', 'Faculty', Faculty_url, '1830 Ontario S
 BREWERIES = [ThirtyThreeAcres, Bomber, Brassneck, Faculty, Luppolo, Parallel49, RnB, StrangeFellows]
 
 
-all_breweries = [Luppolo, RnB]
-
-
-# given string, return object
+# given string, return appropriate Brewery object
 def getter(name_of_brewery_to_retrieve):
-    # a_brewery = Brewery("",  "", "", "", "", "", [], [], [])
     for brewery in BREWERIES:
         if brewery.shortname == name_of_brewery_to_retrieve:
             return brewery
