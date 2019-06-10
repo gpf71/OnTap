@@ -1,4 +1,5 @@
 import BreweryScraper as bs
+from datetime import date
 
 # ======== Breweries & Logos URLS =========
 Luppolo_url = 'https://luppolobrewing.ca/#today'
@@ -115,13 +116,37 @@ def print_todays_taps(brew_cos, beer_list_name):
         print"=========================\n"
         if beer_list_name == 'fills':
             print"Growler Fills"
-            bs.print_beer_list(brew_co.fills)
+            print_beer_list(brew_co.fills)
         elif beer_list_name == 'taps':
             print"On Tap"
-            bs.print_beer_list(brew_co.taps)
+            print_beer_list(brew_co.taps)
         else:
             print"Bottles & Cans"
-            bs.print_beer_list(brew_co.products)
+            print_beer_list(brew_co.products)
+        print"\n"
+
+
+def prepare_report(brew_cos, beer_list_name):
+    # prep report
+    todays_report = []
+    today = str(date.today())
+    if beer_list_name == 'fills':
+        todays_report.append(today + " GROWLER FILLS: ")
+    elif beer_list_name == 'taps':
+        todays_report.append(today + " ON TAP: ")
+    else:
+        todays_report.append(today + " BOTTLES & CANS: ")
+    # add contents
+    for brew_co in brew_cos:
+        todays_report.append("`" + brew_co.name + "`" + ":")
+        todays_report.extend(getattr(brew_co, beer_list_name))
+    return todays_report
+
+
+def print_beer_list(beer_list):
+    print"-------------------------"
+    for b in beer_list:
+        print b
 
 
 if __name__ == "__main__":

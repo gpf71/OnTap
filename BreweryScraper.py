@@ -1,7 +1,6 @@
 from bs4 import BeautifulSoup
 from lxml import html
 from selenium import webdriver
-from datetime import date
 import json
 import requests
 
@@ -20,8 +19,8 @@ rnb_names = ['Vancouver Special IPA 6%', 'Raven Cream Ale 4.8%', 'Stolen Bike La
 parallel49_product_url = 'http://parallel49brewing.com/beers'
 
 Instagram = 'https://www.instagram.com/accounts/login/'
-username = TODO username goes here!
-password = TODO password goes here!
+username = TODO username goes here
+password = TODO password goes here
 
 
 #  ====== Global Helper Functions =========
@@ -64,29 +63,6 @@ def add_line_break(beer_list):
     for beer in beer_list:
         formatted_list.append(beer + "\n")
     return formatted_list
-
-
-def prepare_report(brew_cos, beer_list_name):
-    # prep report
-    todays_report = []
-    today = str(date.today())
-    if beer_list_name == 'fills':
-        todays_report.append(today + " GROWLER FILLS: ")
-    elif beer_list_name == 'taps':
-        todays_report.append(today + " ON TAP: ")
-    else:
-        todays_report.append(today + " BOTTLES & CANS: ")
-    # add contents
-    for brew_co in brew_cos:
-        todays_report.append("`" + brew_co.name + "`" + ":")
-        todays_report.extend(getattr(brew_co, beer_list_name))
-    return todays_report
-
-
-def print_beer_list(beer_list):
-    print"-------------------------"
-    for b in beer_list:
-        print b
 
 
 # ========= Luppolo Brewing ===========
