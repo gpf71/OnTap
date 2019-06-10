@@ -10,6 +10,6 @@ Users can request information from East Vancouver Breweries:
     
 Users identify a <brewery name> and a command <taps, fills, or products> and OnTap responds with a list of today's taps, beers available for growlers fills, or products available in cans and bottles. 
   
-The back-end for the bot uses Selenium Webdriver and Beautiful Soup to pull the latest on-tap information from the breweries' websites and then packages it up for delivery to the bot.  
+Depending on the formatting of the brewery's website, the back-end for the bot uses one or more of requests and lxml, Selenium Webdriver, and Beautiful Soup to pull the latest on-tap information and then packages it up for delivery to the bot.  
 
     
