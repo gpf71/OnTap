@@ -1,8 +1,8 @@
 # OnTap
 
-Python-based Slack bot. 
+Python-based Slack bot that can be added to Slack channels as an app.  
 
-The OnTap bot uses the Slack api to interact log in to Slack channels as an app and interact with users. 
+The OnTap bot uses the Slack api to interact with users. 
 
 Users can request information from East Vancouver Breweries: 
     
