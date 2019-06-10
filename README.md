@@ -2,7 +2,7 @@
 
 What's available today at the local breweries? 
 
-Front End: 
+FRONT END: 
 
 Python-based Slack bot "OnTap" that can be added to Slack channels as an app.  
 
@@ -13,7 +13,7 @@ OnTap uses the Slack api to interact with users, who can request information fro
 Users identify a <brewery name> and a command <taps, fills, or products>
 OnTap responds with a list of today's taps, beers available for growlers fills, or products available in cans and bottles. 
 
-Back End: 
+BACK END: 
 
 OnTap.py
 OnTap is the main file: creates Brewery objects which store brewery name, short name, url, address, location, logo, and lists of items available on tap, for fills, and in bottles and cans. Controls updating of brewery information and report generation.  
