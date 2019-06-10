@@ -25,7 +25,10 @@ The breweries display "today's taps" and product information in a variety of for
 TODOs and USER STORIES:
 
 Todo: move all URLS and additional resources to separate file 
-Todo: move class declaration to separate file 
+
+Todo: move class declaration to separate file
+
+Todo: add breweries: Off the Rail, Powell Street, Postmark  
 
 User story: OnTap bot - add option to request in a single command taps and fills and products (or combination thereof) for a brewery
 
