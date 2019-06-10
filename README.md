@@ -28,4 +28,5 @@ Todo: move all URLS and additional resources to separate file
 Todo: move class declaration to separate file 
 
 User story: OnTap bot - add option to request in a single command taps and fills and products (or combination thereof) for a brewery
+
 User story: what's on tap near me? (requires different front end implementation) 
