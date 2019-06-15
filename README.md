@@ -16,17 +16,19 @@ OnTap responds with a list of today's taps, beers available for growlers fills, 
 BACK END: 
 
 OnTap.py
-OnTap is the main file: creates Brewery objects which store brewery name, short name, url, address, location, logo, and lists of items available on tap, for fills, and in bottles and cans. Controls updating of brewery information and report generation.  
+OnTap is the main file:  Controls updating of brewery information and report generation.  
+
+Brewery.py 
+Creates Brewery objects which store brewery name, short name, url, (date) updated, address, location, logo, and lists of items available on tap, for fills, and in bottles and cans.
+
+BreweryResources.py
+Collections of resources such as url for brewery webpages used by the other files. 
 
 BreweryScraper.py 
-The breweries display "today's taps" and product information in a variety of formats and using different technologies, necessitating a custom update function for each one. BreweryScraper uses one or more of requests and lxml, Selenium Webdriver, and Beautiful Soup to pull the latest on-tap information from each brewery's website and then packages it up for delivery to the bot.  
+The brewery websites display "today's taps" and product information in a variety of formats and using different technologies, necessitating a custom update function for each one. BreweryScraper uses one or more of requests and lxml, Selenium Webdriver, and Beautiful Soup to pull the latest on-tap information from each brewery's website and then packages it up for delivery to the bot. Only scrapes a maximum of once per day.
 
     
 TODOs and USER STORIES:
-
-Todo: move all URLS and additional resources to separate file 
-
-Todo: move class declaration to separate file
 
 Todo: add breweries: Off the Rail, Powell Street, Postmark  
 
