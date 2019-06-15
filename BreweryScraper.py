@@ -1,27 +1,10 @@
 from bs4 import BeautifulSoup
 from lxml import html
 from selenium import webdriver
+from datetime import *
+import BreweryResources as br
 import json
 import requests
-
-
-# ====== Additional Resources =======
-
-rnb_image_ids = ['comp-is6i62h6dataItem-is6i62k6imageimage', 'comp-is6i62h6dataItem-is6i62k52imageimage',
-                 'comp-is6i62h6dataItem-is6i62k51imageimage', 'comp-is6i62h6dataItem-is6i62k5imageimage',
-                 'comp-is6i62h6dataItem-jq8kte5limageimage', 'comp-is6i62h6dataItem-is6i62k41imageimage',
-                 'comp-iuxjy3x7dataItem-jr8jxeswimageimage', 'comp-iv7a4h3fdataItem-jv2nlhw5imageimage']
-
-rnb_names = ['Vancouver Special IPA 6%', 'Raven Cream Ale 4.8%', 'Stolen Bike Lager 5%', 'Beer Island Session IPA 4%',
-             'East Side Bitter 5.5%', 'Dude Chilling Pale Ale 5.2%', 'Red Devil Ale 5.2%',
-             'Shake Your Fruity Milkshake IPA 7.3%']
-
-parallel49_product_url = 'http://parallel49brewing.com/beers'
-
-Instagram = 'https://www.instagram.com/accounts/login/'
-username = TODO username goes here
-password = TODO password goes here
-
 
 #  ====== Global Helper Functions =========
 
@@ -50,11 +33,11 @@ def combine_name_abv(fill_name, fill_abv):
 
 def instagram_login():
     driver = webdriver.Chrome()
-    driver.get(Instagram)
+    driver.get(br.Instagram)
     usernameinput = driver.find_elements_by_css_selector('form input')[0]
     passwordinput = driver.find_elements_by_css_selector('form input')[1]
-    usernameinput.send_keys(username)
-    passwordinput.send_keys(password)
+    usernameinput.send_keys(br.username)
+    passwordinput.send_keys(br.password)
     return driver
 
 
@@ -69,6 +52,9 @@ def add_line_break(beer_list):
 
 
 def update_luppolo(brew_co):
+    # information is already current
+    if brew_co.updated == date.today():
+        return
     page = requests.get(brew_co.url)
     tree = html.fromstring(page.content)
     brew_co.fills = tree.xpath('//*[@id="today"]/div/div[1]/div[1]/div/p[2]/text()')
@@ -77,11 +63,15 @@ def update_luppolo(brew_co):
     add_line_break(brew_co.taps)
     brew_co.products = tree.xpath('//*[@id="today"]/div/div[1]/div[1]/div/p[4]/text()')
     add_line_break(brew_co.products)
+    brew_co.updated = date.today()
 
 # # ========= 33 Acres Brewing Co. ==========
 
 
 def update_acres33(brew_co):
+    # information is already current
+    if brew_co.updated == date.today():
+        return
     page = requests.get(brew_co.url)
     tree = html.fromstring(page.content)
 
@@ -98,12 +88,17 @@ def update_acres33(brew_co):
             brew_co.fills.append(beer)
         if "Bottled" in avail:
             brew_co.products.append(beer)
+    brew_co.updated = date.today()
 
 
 # ===== Parallel 49 Brewing =============
 
 
 def update_parallel(brew_co):
+    # information is already current
+    if brew_co.updated == date.today():
+        return
+
     # On Tap & Fills
     page = requests.get(brew_co.url)
     tree = html.fromstring(page.content)
@@ -117,7 +112,7 @@ def update_parallel(brew_co):
 
     # Cans & Bottles
     driver = webdriver.Chrome()
-    driver.get(parallel49_product_url)
+    driver.get(br.parallel49_product_url)
     soup = BeautifulSoup(driver.page_source, 'html.parser')
     driver.quit()
 
@@ -132,12 +127,16 @@ def update_parallel(brew_co):
             name = names[3] + '(' + names[2] + ')'
             beer_list.append(name)
         brew_co.products.append(beer_list)
+    brew_co.updated = date.today()
 
 
 # ======== R&B Brewing ============
 
 
 def update_rnb(brew_co):
+    # information is already current
+    if brew_co.updated == date.today():
+        return
     page = requests.get(brew_co.url)
     tree = html.fromstring(page.content)
 
@@ -149,25 +148,29 @@ def update_rnb(brew_co):
     for image in beerimage_ids:
         beers_ids.append(image.attrib["id"])
 
-    for (id, name) in zip(rnb_image_ids, rnb_names):
+    for (id, name) in zip(br.rnb_image_ids, br.rnb_names):
         if id in beers_ids:
             brew_co.taps.append(name)
 
     brew_co.fills = brew_co.taps
     brew_co.products = ['No Information Available']
+    brew_co.updated = date.today()
 
 
 # ======= Bomber Brewing =========
 
 
 def update_bomber(brew_co):
-    # get the page
+    # information is already current
+    if brew_co.updated == date.today():
+        return
+    # otherwise, get the page
     driver = webdriver.Chrome()
     driver.get(brew_co.url)
     soup = BeautifulSoup(driver.page_source, 'html.parser')
     driver.quit()
 
-    # find info on beers
+    # beer information is in three containers
     beer_containers = soup.find_all('div', {'class': 'section-items-container'})
 
     i = 0
@@ -181,6 +184,7 @@ def update_bomber(brew_co):
         if i == 2:
             brew_co.products = bomber_helper(items)
         i += 1
+    brew_co.updated = date.today()
 
 
 def bomber_helper(beer_list):
@@ -202,7 +206,10 @@ def bomber_helper(beer_list):
 
 
 def update_brassneck(brew_co):
-    # get the page
+    # information is already current
+    if brew_co.updated == date.today():
+        return
+    # otherwise, update
     driver = webdriver.Chrome()
     driver.get(brew_co.url)
     soup = BeautifulSoup(driver.page_source, 'html.parser')
@@ -219,6 +226,7 @@ def update_brassneck(brew_co):
     items_in_cans = cans_container.find_all('a')
     brew_co.products = brassneck_helper(items_in_cans)
 
+    brew_co.updated = date.today()
 
 def brassneck_helper(item_list):
     list_of_names = []
@@ -242,7 +250,10 @@ def brassneck_helper(item_list):
 
 
 def update_strangefellows(brew_co):
-    # get the page
+    # information is already current
+    if brew_co.updated == date.today():
+        return
+    # otherwise, update
     driver = webdriver.Chrome()
     driver.get(brew_co.url)
     soup = BeautifulSoup(driver.page_source, 'html.parser')
@@ -265,6 +276,7 @@ def update_strangefellows(brew_co):
         if i == 2:
             brew_co.products.extend(strange_fellows_helper(beers_in_category))
         i += 1
+    brew_co.updated = date.today()
 
 
 def strange_fellows_helper(beers_in_cat):
@@ -295,7 +307,10 @@ def strange_fellows_helper(beers_in_cat):
 
 
 def update_faculty(brew_co):
-    # navigate to instagram page 'facultytaps', select most recent post
+    # information is already current
+    if brew_co.updated == date.today():
+        return
+    # otherwise, navigate to instagram page 'facultytaps', select most recent post
     driver = instagram_login()
     driver.get(brew_co.url)
     first_post = driver.find_element_by_css_selector("#react-root > section > main > div > div._2z6nI "
@@ -329,5 +344,6 @@ def update_faculty(brew_co):
         i += 1
 
     brew_co.products = ['No Information Available']
+    brew_co.updated = date.today()
 
 

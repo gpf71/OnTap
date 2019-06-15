@@ -19,7 +19,7 @@ EXAMPLE_COMMAND = "fills"
 MENTION_REGEX = "^<@(|[WU].+?)>(.*)"
 HELP = "Commands:\n *taps* (now pouring)\n*fills* (beers available for growler fills)\n*products* (available in bottles and/or cans)\n*breweries* (list of breweries OnTap can query)\n\nSample usage: Luppolo taps"
 BREWERIES = ['ThirtyThreeAcres', 'Bomber', 'Brassneck', 'Faculty', 'Luppolo', 'Parallel49', 'RnB', 'StrangeFellows']
-BREWERY_VARIANTS = [('33 Acres', 'ThreeAcres', '33Acres', 'thirtythreeacres', '33acres'), ('Bomber', 'bomber'), ('Brassneck', 'brassneck'), ('Fauclty', 'faculty'), ('Luppolo', 'luppolo'), ('Parallel 49', 'Parallel49', 'parallel49'), ('R&B', 'RnB', 'rnb', 'RandB'), ('Strange Fellows', 'StrangeFellows', 'strangefellows')]
+BREWERY_VARIANTS = [('33 Acres', 'ThreeAcres', '33Acres', 'thirtythreeacres', '33acres'), ('Bomber', 'bomber'), ('Brassneck', 'brassneck'), ('Faculty', 'faculty'), ('Luppolo', 'luppolo'), ('Parallel 49', 'Parallel49', 'parallel49'), ('R&B', 'RnB', 'rnb', 'RandB'), ('Strange Fellows', 'StrangeFellows', 'strangefellows')]
 
 
 def parse_bot_commands(slack_events):
